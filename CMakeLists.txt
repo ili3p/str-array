@@ -9,6 +9,3 @@ SET(luasrc init.lua)
 ADD_TORCH_PACKAGE(strarray "${src}" "${luasrc}")
 
 TARGET_LINK_LIBRARIES(strarray luaT TH)
-IF(LUALIB)
-  TARGET_LINK_LIBRARIES(strarray ${LUALIB})
-ENDIF()
