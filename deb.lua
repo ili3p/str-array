@@ -1,3 +1,3 @@
 strarray = require('strarray')
 n = 5
-b = strarray(n)
+b = strarray.new(n)

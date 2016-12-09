@@ -5,7 +5,7 @@
 
 typedef struct StrArray{
     int size;
-    char values[1];
+    int values[1];
 } StrArray;
                                                            
 static int new_array(lua_State *L)
@@ -45,11 +45,20 @@ static int get_val(lua_State *L)
     StrArray *array = (StrArray *) lua_touserdata(L, 1);
     int index = lua_tointeger(L, 2);
 
-    printf("index is %d", index);
-
-    lua_pushfstring(L, "%c", array->values[index]);
+    lua_pushfstring(L, "%d", array->values[index]);
 
     return 1;
+}
+
+static int set_val(lua_State *L)
+{
+    StrArray *array = (StrArray *) lua_touserdata(L, 1);
+    int index = lua_tointeger(L, 2);
+    int val = lua_tointeger(L, 3);
+
+    array->values[index] = val;
+
+    return 0;
 }
 
 static const struct luaL_Reg libstrarray[] = {
@@ -60,6 +69,7 @@ static const struct luaL_Reg libstrarray[] = {
 static const struct luaL_Reg libstrarray_m [] = {
     {"__tostring", print_array},
     {"__index", get_val},
+    {"__newindex", set_val},
     {NULL, NULL}
 };
 
